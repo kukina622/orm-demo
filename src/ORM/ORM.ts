@@ -28,4 +28,22 @@ export class ORM {
       }
     });
   }
+
+  public query(statement: string): Promise<any>;
+  public query(statement: string, row: any[]): Promise<any>;
+  public query(statement: string, row?: any[]): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (row === undefined) {
+        this.connection.query(statement, function (err, results, fields) {
+          if (err !== null) reject(err);
+          resolve([results, fields]);
+        });
+        return;
+      }
+      this.connection.query(statement, row, function (err, results, fields) {
+        if (err !== null) reject(err);
+        resolve([results, fields]);
+      });
+    });
+  }
 }
