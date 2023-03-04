@@ -8,7 +8,7 @@ export function createTableParser(dataModelRef: typeof DataModel) {
   for (const fieldName in field) {
     statement += getColumnInfo(fieldName, field[fieldName]) + ", ";
   }
-  statement = statement = statement.slice(0, -1);
+  statement = statement.slice(0, -2);
   statement += ");";
   return statement;
 }
