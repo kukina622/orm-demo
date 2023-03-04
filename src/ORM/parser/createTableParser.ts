@@ -9,7 +9,7 @@ export function createTableParser(dataModelRef: typeof DataModel) {
     statement += getColumnInfo(fieldName, field[fieldName]) + ", ";
   }
   statement = statement.slice(0, -2);
-  statement += ");";
+  statement += ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
   return statement;
 }
 
