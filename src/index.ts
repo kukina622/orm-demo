@@ -3,10 +3,17 @@ import { ORM, Field, DataType, PK, DataModel } from "./ORM";
 class Test extends DataModel {
   @PK
   @Field({ type: DataType.VARCHAR, length: 20 })
-  name: String | undefined;
+  name: String;
 
   @Field({ type: DataType.INT })
-  age: number | undefined;
+  age: number;
+
+  constructor(param: Test = {} as Test) {
+    super();
+    const { name, age } = param;
+    this.name = name;
+    this.age = age;
+  }
 }
 
 const orm = new ORM({
@@ -16,4 +23,6 @@ const orm = new ORM({
   user: "test"
 });
 
-orm.register(Test)
+orm.register(Test);
+
+new Test().findAll<Test>()
