@@ -8,11 +8,24 @@ export class ORM {
     this.connection = mysql.createConnection(config);
   }
   public register(dataModelRef: typeof DataModel) {
+    this.inject(dataModelRef);
+
     const statement = createTableParser(dataModelRef);
     console.log("[ORM] " + statement);
 
     this.connection.query(statement, function (err, results, fields) {
-      console.log(results);
+      if (err !== null) {
+        throw err;
+      }
+      console.log("[ORM] Query success");
+    });
+  }
+  private inject(dataModelRef: typeof DataModel) {
+    const orm = this;
+    Object.defineProperty(dataModelRef.prototype, "_orm", {
+      get() {
+        return orm;
+      }
     });
   }
 }
