@@ -4,3 +4,7 @@ export enum DataType {
   CHAR,
   DATETIME
 }
+
+export function getDataTypeNameByValue(v: number) {
+  return DataType[v];
+}
