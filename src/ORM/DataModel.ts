@@ -1,4 +1,5 @@
 import { ORM } from "./ORM";
+import { insertParser } from "./parser/insertParser";
 
 function createInstance<T>(
   clazz: new (...args: any[]) => T,
@@ -25,6 +26,10 @@ export class DataModel {
     return resultInstance
   }
   public update() {}
-  public save() {}
+  public async save() {
+    const table = this._constructor.name;
+    const statement = insertParser(this._field, table, this);
+    await this._orm?.query(statement)
+  }
   public delete() {}
 }

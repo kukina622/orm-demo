@@ -3,16 +3,20 @@ import { ORM, Field, DataType, PK, DataModel } from "./ORM";
 class Test extends DataModel {
   @PK
   @Field({ type: DataType.VARCHAR, length: 20 })
-  name: String;
+  name: String | undefined;
 
   @Field({ type: DataType.INT })
-  age: number;
+  age: number | undefined;
 
-  constructor(param: Test = {} as Test) {
+  constructor();
+  constructor(param: { name: String; age: number });
+  constructor(param?: { name: String; age: number }) {
     super();
-    const { name, age } = param;
-    this.name = name;
-    this.age = age;
+    if (param !== undefined) {
+      const { name, age } = param;
+      this.name = name;
+      this.age = age;
+    }
   }
 }
 
@@ -23,8 +27,9 @@ class Test extends DataModel {
     password: "123456",
     user: "test"
   });
-  
+
   await orm.register(Test);
-  
-  new Test().findAll<Test>()
-})()
+
+  console.log("-------------------------------");
+  console.log(new Test({ name: "CCCCCC", age: 123 }).save());
+})();
