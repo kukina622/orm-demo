@@ -1,5 +1,5 @@
 import { ORM } from "./ORM";
-import { insertParser } from "./parser/insertParser";
+import { insertParser } from "./parser";
 
 function createInstance<T>(
   clazz: new (...args: any[]) => T,
