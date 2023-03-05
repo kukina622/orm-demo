@@ -16,13 +16,15 @@ class Test extends DataModel {
   }
 }
 
-const orm = new ORM({
-  database: "test",
-  host: "127.0.0.1",
-  password: "123456",
-  user: "test"
-});
-
-orm.register(Test);
-
-new Test().findAll<Test>()
+(async function () {
+  const orm = new ORM({
+    database: "test",
+    host: "127.0.0.1",
+    password: "123456",
+    user: "test"
+  });
+  
+  await orm.register(Test);
+  
+  new Test().findAll<Test>()
+})()

@@ -7,18 +7,14 @@ export class ORM {
   constructor(config: mysql.ConnectionOptions) {
     this.connection = mysql.createConnection(config);
   }
-  public register(dataModelRef: typeof DataModel) {
+  public async register(dataModelRef: typeof DataModel): Promise<void> {
     this.inject(dataModelRef);
-
     const statement = createTableParser(dataModelRef);
-    console.log("[ORM] " + statement);
-
-    this.connection.query(statement, function (err, results, fields) {
-      if (err !== null) {
-        throw err;
-      }
-      console.log("[ORM] Query success");
-    });
+    try {
+      await this.query(statement);
+    } catch (error) {
+      throw error;
+    }
   }
   private inject(dataModelRef: typeof DataModel) {
     const orm = this;
@@ -33,6 +29,7 @@ export class ORM {
   public query(statement: string, row: any[]): Promise<any>;
   public query(statement: string, row?: any[]): Promise<any> {
     return new Promise((resolve, reject) => {
+      console.log("[ORM] " + statement);
       if (row === undefined) {
         this.connection.query(statement, function (err, results, fields) {
           if (err !== null) reject(err);
