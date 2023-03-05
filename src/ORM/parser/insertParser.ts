@@ -1,4 +1,3 @@
-import { DataModel } from "../DataModel";
 interface Ifield {
   [key: string]: any;
 }

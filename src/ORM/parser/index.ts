@@ -1,2 +1,2 @@
-export * from "./createTableParser"
-export * from "./insertParser"
+export * from "./createTableParser";
+export * from "./insertParser";

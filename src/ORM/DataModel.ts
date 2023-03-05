@@ -11,10 +11,10 @@ function createInstance<T>(
 export class DataModel {
   public readonly _field: any | undefined;
   private _orm: ORM | undefined;
-  private _constructor
+  private _constructor;
 
-  constructor(){
-    this._constructor = this.constructor
+  constructor() {
+    this._constructor = this.constructor;
   }
 
   public async findAll<T extends DataModel>(): Promise<Array<T>> {
@@ -22,14 +22,14 @@ export class DataModel {
     const [results] = await this._orm?.query(`SELECT * FROM ${table}`);
     const resultInstance = results.map((x: any) => {
       return createInstance(this._constructor as any, x);
-    });    
-    return resultInstance
+    });
+    return resultInstance;
   }
   public update() {}
   public async save() {
     const table = this._constructor.name;
     const statement = insertParser(this._field, table, this);
-    await this._orm?.query(statement)
+    await this._orm?.query(statement);
   }
   public delete() {}
 }
